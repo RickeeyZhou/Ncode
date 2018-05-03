@@ -1,0 +1,275 @@
+上节课回顾：
+查询：DQL语言
+1.基本查询
+	select 字段，字段 。。。from 表名
+	as，distinct。。。
+
+2.条件查询
+	select 。。。from 表名 where[查询条件]
+	比较运算符：>,<,>=,<=,=,!=,<>
+	逻辑运算符：and or not，
+		&&，||，!
+	排序：order by
+	聚合函数：max(),min(),count(),sum(),avg()...
+	分组：group by 字段
+		having 。。。
+	分页：limit start ，cont
+
+
+3.多表联查
+	A：合并结果集
+		UNION，UNION ALL
+
+	B：多表联查
+		a）笛卡尔积
+		b）内连接
+连接条件，检索出来的数据，都是满足连接条件。
+方言：select 字段。。。from 表1 别名1 ，表2 别名2 where 别名1.字段=别名2.字段
+
+标准：select 字段。。。from 表1 别名1 inner join 表2 别名2 on 别名1.字段=别名2.字段
+
+自然：select 字段。。。from 表1 别名1 natural inner join 表2 别名2 
+
+
+
+		c）外连接
+补充内连接的结果：
+左外连接：
+标准：select 字段。。。from 表1 别名1 left outer join 表2 别名2 on 别名1.字段=别名2.字段
+自然：select 字段。。。from 表1 别名1 natural left outer join 表2 别名2
+
+右外连接
+标准：select 字段。。。from 表1 别名1 right outer join 表2 别名2 on 别名1.字段=别名2.字段
+自然：select 字段。。。from 表1 别名1 natural right outer join 表2 别名2
+
+
+
+全外：
+左外 UNION 右外
+		d）自连接
+一张表自己连接自己。。
+
+
+
+4.子查询
+select语句中可以在包含select语句
+	where，将子查询的结果作为筛选条件
+	from，将子查询的结果作为临时表
+
+	语法要求：1.必须(),2.不能使用order by，3.最多不能超过255。
+
+	A：单行子查询
+子查询的结果，返回的结果是一条，配合：=,!=,<>,>,<,>=,<=
+
+	B：多行子查询
+子查询的结果，返回的是结果是多条(看成是集合),配合：in， any，all
+
+	C：关联子查询
+外层查询使用内层查询的结果，内层查询使用外层查询的内容。
+
+
+
+
+DDL，DML，DQL。。。
+
+视图，索引，数据库的优化。。
+
+本堂课内容：
+
+1.程序代码操作数据库
+go代码操作数据库：
+	需要驱动包：
+		下载：需要git
+			命令：github.com/go-sql-driver/mysql
+
+
+下载后：gopath的路径下，pkg的文件夹，github.com
+
+gopath：目录
+	存储go的源代码
+		src-->源代码
+		pkg-->github.com
+
+
+
+
+插入操作：
+step1：导包
+	"database/sql"
+	_ "github.com/go-sql-driver/mysql"
+
+
+step2：打开数据库，建立连接
+	db,_:=sql.Open("mysql","root:xxx@tcp(127.0.0.1:3306)/my1802?charset=utf8")
+
+step3：操作数据库：
+	stmt_:=db.Prepare("sql .... ?,?")
+
+	result,_:=stmt.Exec(给？赋值)
+step4：操作结果对象
+	result.LastIndexId()-->int64
+	result.RowsAffected()-->int64
+
+
+step5：关闭资源
+	stmt.Close()
+	db.Close()
+
+
+查询数据库：DQL语言
+step1：同上，导入包
+step2：同上，建立连接
+step3：查询
+	rows,err:=db.Query("select....",占位符的替换的值)
+step4：处理查询到的数据
+	rows.Colums()-->查询到的字段的名字 []string
+	rows.Next()-->bool,判断是否有下一个数值
+	rows.Scan(&变量名，&....)
+
+	思路一：存入到map里
+	思路二：存入到struct里
+
+
+
+
+
+数组，切片
+	
+map
+
+面向对象：
+	struct：--->class
+		字段，方法
+
+
+	interface：--->提供方法的描述
+		
+
+interface类型，可以存储任意实现类的对象
+
+
+
+
+go
+
+	gopath，存储源代码
+		c:\ruby\gocode
+			src：存储源代码
+			bin：
+			pkg：程序包
+
+
+gopath:c:\ruby\gocode;c:\ruby\workspace\workspace_go;c:\ruby\workspace\workspace_1802;
+
+
+
+go get github.com/go-sql-driver/mysql
+
+	
+
+
+
+2.反射	
+
+
+
+总结：
+1.go连接mysql
+step1：导入包
+"database/sql"
+_ "github.com/go-sql-driver/mysql"
+
+step2：连接
+	db,err:=sql.Open("mysql","root:xxx@tcp(127.0.0.1:3306)/my1802")
+
+step3：操作数据库：CRUD
+	增删改：
+		db.Prepare(sql语句)-->Stmt
+		stmt.Exec()-->Result
+	查：
+		db.Query(sql语句)-->Rows
+			循环操作Rows对象，获取结果数据
+			rows.Scan()
+				切片：map/struct
+
+		db.QueryRow(sql语句)-->Row
+			row.Scan()
+
+step4：处理操作的结果
+
+step5：关闭资源
+	stmt.Close()
+	rows.Close()
+	db.Close()
+
+
+事务：transaction
+原子性，一致性，隔离性，持久性
+	手动开启事务：db.Begin()-->Tx
+		一组sql操作
+		tx.Exec(),tx.Prepare()...
+		
+	手动提交提交，回滚
+		tx.Commit(),tx.Rollback()
+
+
+2.反射reflect
+struct
+	reflect.TypeOf(i interface{})-->Type
+		获取结构体的字段的类型，字段名
+		
+		方法的类型，方法的名字
+
+	reflect.ValueOf(i interface{})-->Value
+		获取结构体的字段的数值
+
+		获取方法的对象--->Call(),执行对应的方法
+
+
+//匿名字段
+t1.FieldByIndex([]int{0,0})
+
+v1.FieldByIndex([]int{0,0})
+
+
+//更改数据
+reflect.ValueOf(p1)-->value
+	reflect.Struct
+
+reflect.ValueOf(&p1)-->value
+	reflect.Ptr
+
+v1 = v1.Elem()
+CanSet()-->bool
+
+c1.FieldByName()-->f1
+	f1.SetXXX(新value)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

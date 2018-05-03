@@ -1,0 +1,325 @@
+上节课回顾：
+通道：channel
+goroutine之间传递数据,每个通道都有自己关联的类型。
+1.创建：make(chan T)
+2.使用：发送数据，接收数据
+	ch1:=make(chan int)
+
+	ch1 <- data,将data发送到ch1上
+	data := <- ch1,从ch1中读取数据，赋值给data
+
+
+发送数据，读取数据本身都是阻塞的
+ch1 <- data，当前的goroutine，其他的goroutine读取数据解除阻塞
+<- ch1,当前的goroutine，阻塞，其他的goroutine写出数据解除阻塞
+
+
+关闭：发送方关闭通道，为了通知接收方，没有数据了。
+close(ch1)
+循环接收：
+	value , ok <- ch1
+value,从ch1中读取到的数据，成功读取，ok的值为true，如果通道是关闭value就是零值，ok为false
+
+循环配置range使用
+for v:= range ch1{//循环从ch1中获取数据，直到通道显示的关闭
+
+}
+
+
+缓存通道：
+make(chan T),无缓存，发送和接收都是阻塞
+
+make(chan T, size)，缓存的通道，当缓存区满时，发送和接收才会阻塞。
+
+
+定向通道：
+	双向：默认就是双向
+		ch1 := make(chan T)
+		可以发送(写数据)，可以接收(读数据)
+
+	只读：只能接收数据：
+		ch1 := make(chan <- T)
+	只写：只能发送数据
+		ch1 := make(<- chan T)
+
+
+	传递参数：
+		函数中只能写数据：
+		函数中只能读数据：
+
+
+生产者消费者模型：
+channel
+	goroutine：生产者，产生数据
+		向通道发送数据
+
+	goroutine：消费者，获取数据
+		从通道中接收数据
+
+1个生产者--N个消费者
+
+N个生产者--1个消费者
+
+N个生产者--N个消费者
+
+
+time：包
+	time.After(d Duration)-->
+		chan Time
+
+
+select语句：分支语句
+专门用于通道：
+select{
+case <- ch1:
+
+case ch1 <- data:
+
+//default:
+
+}
+
+
+
+
+本堂课内容：
+
+网络编程：socket
+	TCP，UDP
+	不同地理位置上的主机之间传递数据
+		
+
+网络：
+	上网：
+		撩妹(QQ,飞秋,msn，gmail，陌陌，探探。。。)
+
+		购物：某宝，某东，某猫。。。
+
+		网络游戏：
+
+
+三要素：
+1.定位主机：
+	ip地址：192.168.1.128
+
+	本机："127.0.0.1","localhost"
+
+
+
+2.定位主机上的网络应用程序：
+	port：端口
+		0-256*256
+
+	公共端口：
+
+		12345
+		22345
+		32345
+		
+
+3.网络协议：
+
+
+
+扩展内容：
+	网络模型
+
+
+B/S
+	Browser/Server
+
+	rose的电脑，访问淘宝
+	
+C/S
+
+	Client/Server
+		QQ
+
+
+
+服务端和客户端
+	服务端：提供服务，被动等待
+		7*24
+
+	客户端：获取数据，主动发起连接的一方
+
+
+TCP，UDP
+
+tcp：面向连接传递
+	安全，靠谱，效率低
+
+
+udp：面向无连接
+	不安全，效率高
+
+
+TCP编程：
+	服务端和客户端
+
+
+
+
+
+net.ResolveTCPAddr(add)-->TCPAddr
+
+net.ListenTCP(tcpAddr)-->listener
+
+listenrer.Accetp()-->conn
+
+conn.Read()
+conn.Write()
+
+net.DialTCP(tcpAddr)-->tcpConn
+
+tcpConn.Read()
+tcpConn.Write()
+
+close()
+
+
+
+
+
+
+break
+return
+os.Exit(0)
+
+
+
+客户端读键盘一句话，发送给服务器，
+服务器读键盘一句话，发送给客户端
+
+循环聊天：
+A：客户端读键盘
+B：客户端发送数据给服务器
+	C：服务器接收客户端传来的数据
+	D：服务器读键盘
+	E：服务器将数据发送给客户端
+F：客户端读取服务器的数据
+
+
+ECHO：
+A：客户端读键盘
+B：客户端发送数据给服务器
+	C：服务器接收客户端传来的数据
+	E：服务器将数据发送给客户端："ECHO：客户端发来的数据"
+F：客户端读取服务器的数据
+
+
+
+
+
+
+
+
+
+总结和作业：
+1.客户端向服务器传递一个图片文件：理解为文件上传
+	客户端读本地图片，别写给服务器，
+	服务器边读客户端传来的图片数据，边进行存储。。
+
+
+2.服务器给客户端传数据：文件下载。。
+	多个客户端同时下载文件。。配合goroutine
+
+
+选做
+3.客户端群聊
+4.客户端单聊
+
+
+
+MySQL：
+	
+
+
+总结：
+1.网络编程
+	socket
+	
+	-->TCP，UDP
+
+	TCP:面向连接编程
+		类比于打电话
+		数据安全，效率低(反复的确认，3次握手)
+	UDP:面向无连接编程
+		类比于写信
+		数据不安全，效率高(只负责发送数据。。)
+
+
+2.网络编程的三要素
+1.ip
+	计算机在互联网中的地址，唯一标识。
+2.port
+	网络应用程序：端口
+		0-65535
+	
+	0-1024，公共端口号
+	54321,9527,9528,9529,12345....
+
+		
+3.协议：
+	go，java，python。。。。
+
+
+3.TCP编程的操作步骤：
+服务器和客户端
+	
+服务端：
+	step1：指定自己的ip(本机ip)和端口
+		net.ResolveTCPAddr("tcp4",string)-->TCPAddr 
+
+	step2：获取监听器，监听端口
+		listener,err:=net.ListenTCP(tcpAddr)
+	
+	step3：接收客户端的连接请求
+		listener.Accept()-->conn
+
+	step4：数据交互
+			conn
+				Read(),Write()
+
+	step5：关闭资源
+		conn.Close()
+
+
+客户端：
+	step1：指定服务器的ip和端口
+
+	step2：申请连接指定服务器
+		net.DialTCP("tcp",tcpAddr)-->tcpConn
+
+	step3：数据交互
+			tcpConn
+				Read(),Write()
+
+
+	step4：关闭资源
+		tcp.Close()
+
+
+RemoteAttr(),获取远程的地址
+
+
+
+4.结合goroutine
+	Accept(),Read(),Scanln()
+
+	客户端中：
+		一个goroutine，可以读取键盘，写给服务器
+		另一个goroutine，读取服务器的数据
+
+
+	服务器端：
+		同时连接多个个客户端
+		for{
+			Accept()-->conn
+			go func(){
+				conn.Read(),conn.Write()
+			}
+		}
+
+
+

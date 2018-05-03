@@ -1,0 +1,350 @@
+上节课回顾：
+1.error
+	A：代表错误，针对于函数的运行结果。多返回值。
+	B：nil，没有错误
+
+	error，内置的接口
+	type error interface{
+		Error() string //错误的描述信息
+	}
+
+
+自定义函数，如果要返回error
+return error
+	实际上是返回接口的实现类的对象
+	errors.New()-->error
+	fmt.Errorf()-->error
+
+
+	自定义实现类
+	type MyError struct{
+
+	}
+
+	
+
+2.defer,延迟
+	函数，方法
+	参数：defer 函数，已经传递参数
+
+	多个defer，按照后进先出：
+		先defer后执行，后defer先执行
+
+
+3.panic recover
+	panic(),恐慌
+		打断程序的执行，可以在任意位置上执行。
+
+	res := recover(),恢复
+		恢复panic打断了 的程序，继续执行，一定在defer函数中，才能使用。
+
+
+4.包
+	strconv,字符串和基本类型之间的转换
+		string<-->int,uint,bool,float
+		string-->基本类型
+			parseXXX(string)-->基本类型
+
+		基本类型-->string
+			FormatXXX(基本类型)-->string
+
+		Atoi(),Itoa()	
+
+	math,数学中的常用公式
+		pow(x,y),pow10(n)
+		ceil(),floor(),round(),modf()
+		sqrt(),cbrt()
+		abs(),mod().......
+	time,表示时间和日期
+		Duration，Time
+		A：获取Time对象
+			Now()-->Time,当前时间
+			Date(year,month,day,hour,minute,second,..)-->Time,
+
+		B：和string之间转换：格式化
+			time-->string
+t1.Format("2006 1 2 15:04:05")
+			string-->time
+time.Parse(s1,"")-->time
+		
+		C：时间戳：int64的数值
+当前的时间对象，距离1970年1月1日的时间差值：
+	秒：Unix()-->
+	纳秒：UnixNans()-->
+
+
+		
+
+
+今天内容：
+time
+	D：获取日期，获取时间
+	E：获取年，月，日，星期，时，分，秒。。
+	F：Duration，时间间隔
+		
+文件，目录
+目录：directory
+	文件存储的路径位置。
+		理解为：文件夹
+		C：不能动
+		D：娱乐
+			电影
+				电影
+				电视剧
+					韩国片
+					动作片
+					动画片。。
+					
+			歌曲
+			美图图
+			。。
+		E：学习
+		F：其他
+文件：file
+	用于存储数据，靠文件的类型存储不同类型的数据。
+		后缀：
+			图片：.jpg,jpeg.png,gif
+			文本：.txt
+			音频：.mp3
+			视频：.mp4
+			压缩文件：.zip..rar...
+			.exe.....
+
+	文件大小：字节
+		
+
+
+
+数据存储：
+	程序执行过程中产生的数据：存储在内存中。--->瞬时性。
+
+	文件，硬盘上。持久化存储数据。
+
+
+
+
+程序的执行：
+	CPU，内存
+
+
+
+文件路径：
+	绝对路径：
+		从跟盘符开始的路径。
+		C:\Ruby\pro\aa.txt
+		C:\Ruby\pro
+	相对路径：
+		参照物
+		C:\Ruby\pro
+			
+			aa.jpeg
+			\火影忍者\nine.jpg
+
+		C:\Ruby\pro\aa.jpeg
+
+
+		C:\Ruby\pro\火影忍者\nine.jpg
+
+		.
+		..
+
+		程序中：以当前的项目的路径，为相对路径的参照物。
+		
+
+		
+os包：
+	os.Stat("pathname")-->fileInfo
+		Name(),Size(),isDir(),Mode(),ModTime()
+
+	os.mkdir("pathname")-->创建文件，仅一层
+	os.mkdirall("pathname")-->创建文件，可以多层
+
+	os.create("pathname") *file,err-->创建空文件
+	os.open()*file,err-->打开文件
+
+	os.remove(),删除文件或文件夹，
+	os.removeall(),删除所有
+
+
+
+filepath:
+	filepath.abs()
+	filepath.isabs()
+
+
+
+
+
+os.Open("文件名")-->file指针对象
+	表示程序中打开文件，和文件建立连接，可以操作文件了。
+
+	就是操作file对象，就是操作文件。。
+
+
+文本文件：
+	open()-->在文件最开头有光标，
+	第一次读取：从头开始的4个数据
+		read(切片长度为4)，最多读入4个数据
+
+	第二次读取：读取接下来的4个数据
+		read(切片长度为4)，最多读入4个数据
+
+
+	第三次读取：读取接下来的2个数据。
+		read(切片长度为4)，最多读入4个数据
+			实际读取2个数据，因为只剩两个
+
+			
+		光标在文件的末尾处。
+
+	第四次读取：没有数据可读
+		实际读取0个，count
+		返回值error，io.EOF
+
+
+
+源文件：3900
+bs：1000
+
+第一次：读Read(bs)1000，写Write(bs[:count])1000,剩余2900
+第二次：读Read(bs)1000,写Write(bs[:count])1000，剩余1900
+第三次：读Read(bs)1000,写Write(bs[:count])1000，剩余900
+第四次：读Read(bs)900,写Write(bs[:count])900，剩余0
+
+EOF
+
+bs :=make([] byte,1024)
+Read(bs)-->count
+
+Write(bs)-->count
+
+
+ioutil
+
+总结和作业：
+1、time
+日期和时间
+	Now()-->Time   *****
+	Date()-->Time
+
+	时间-字符串：模板2006 1 2 15:04:05
+		Parse()
+		Format()
+
+	时间戳：距离1970年1月1日，0点0分0秒的时间差值
+		Unix()  *****
+		UnixNans()  ******
+
+	获取时间，日期
+		Date()
+		Clock()
+
+		Year(),Monty(),Day(),Hour(),Minute(),Second(),Weekday()..
+
+	Duration：时间间隔
+		type Duration int64
+
+	Add()
+	AddDate(year,month,day)
+	Sub()
+	After()
+	Before()
+
+	Sleep() *****
+
+2、
+文件、目录
+file，directory
+
+
+os包
+	Stat()-->FileInfo
+		获取文件的信息：
+			Name()
+			IsDir()
+			ModTime()
+			Mode()
+			Size()
+	Open()-->*File,err  *****
+		
+	OpenFile(filename，flag，perm)-->*File,err  *****
+		filename：文件名字 
+		flag，获取file的打开模式：
+			O_RDONLY
+			O_WRONLY
+			O_RDWR
+			O_CREATE
+
+		perm，如果文件不存在，需要指定创建的文件的权限
+			0777,0666
+			-rw-
+
+	File  **
+		Read([]byte)-->count,err，读取数据
+		ReadAt([] byte, off)-->coutn,err，从指定off位置读取
+		Write([]byte)-->count,err，写出字节数组
+		WriteAt([]byte,off)，在指定位置写出数据。
+		WriteString(string)，直接写出字符串
+
+		Seek(offset, whence)，设置光标的未知
+			offset,偏移量
+			whence，从哪开始：0从头，1当前，2末尾
+
+  filepath包
+	Abs()
+		获取绝对路径：程序中以当前工程为参照。
+
+	IsAbs()
+		判断是否是绝对路径
+
+
+	绝对路径：Absolute
+		从跟盘符开始描述
+
+	相对路径：Relative
+		相对于参照物
+
+  io包
+	Copy(Write，Reader)-->total,err
+		拷贝文件
+
+  ioUtil包
+	ReadFile(filename)-->[]byte data  *****
+		读取指定文件中的所有内容
+	WriteFile(filename, [] byte data,FileMode) *****
+		向指定文件中写出数据，
+
+	ReadAll()
+
+	ReadDir(dirname)-->[]FileInfo
+		获取指定目录下的子内容，只有一层
+
+
+
+
+
+
+作业：
+1.消化课堂代码
+
+附加题：可选的
+	断点续传
+	递归遍历文件夹
+
+	自学：bufio包
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

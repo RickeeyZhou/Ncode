@@ -1,0 +1,45 @@
+第一部分
+
+1消化课堂代码
+
+2整理课堂笔记
+
+第二部分
+给出以下代码的运行结果
+1.
+func stillTest(v int) {
+    v = v + 100
+}
+i := 100
+fmt.Println("i ", i)
+stillTest(i)
+fmt.Println("after i ", i)
+
+2.
+func anotherStillTest(v *int) {
+    *v = *v + 100
+}
+
+fmt.Println("i ", i)
+anotherStillTest(&i)
+fmt.Println("after i ", i)
+
+
+3.
+func addressStillTest(v *int) {
+    x := 456
+    v = &x
+}
+
+x := 1000
+fmt.Println("x ", x)
+addressStillTest(&x)
+fmt.Println("after x ", x)
+
+
+
+4.对于map集合的拷贝
+5.定义一个函数，接收一个切片作为参数
+
+
+

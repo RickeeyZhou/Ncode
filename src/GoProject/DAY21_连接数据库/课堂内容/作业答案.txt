@@ -1,0 +1,46 @@
+
+-- 9.查询不是领导的员工 信息
+SELECT * FROM emp WHERE empno not in(SELECT DISTINCT mgr from emp WHERE mgr is NOT NULL);
+
+SELECT DISTINCT mgr from emp;
+
+-- 列出薪金高于工资平均薪金的所有员工，所在部门，上级领导，公司的工资等级。
+SELECT AVG(sal) FROM emp;
+
+SELECT e.empno,e.ename,e.job,e.sal,s.grade,s.losal,s.hisal,d.dname,m.empno,m.ename
+FROM emp e,dept d,salgrade s, emp m
+WHERE e.sal > (SELECT AVG(sal) FROM emp) 
+			AND e.deptno=d.deptno
+			AND e.sal BETWEEN s.losal AND s.hisal
+			AND e.mgr = m.empno;
+
+-- 列出    各个部门的MANAGER 的    最低薪金
+-- 每个部门只有一个manager，可以此种写法
+SELECT * FROM emp WHERE job='manager';
+
+-- 每个部门有多个manager，
+SELECT deptno,min(sal)
+FROM emp
+WHERE job='manager'
+GROUP BY deptno;
+
+-- 列出每个部门工作的员工数量、平均工资和平均服务期限?????
+
+
+
+SELECT empno,ename,hiredate,YEAR(hiredate)as '年',MONTH(hiredate) '月份',DAY(hiredate) '日' FROM emp;
+
+-- 服务期限
+-- 2018-04-21 09:43:27
+SELECT NOW();
+SELECT VERSION();
+ -- 2018-04-21
+SELECT CURDATE();
+-- 09:43:58
+SELECT CURRENT_TIME()
+ -- 2018-04-21
+SELECT CURRENT_DATE()
+
+SELECT empno,ename,hiredate, DATEDIFF(CURDATE(),hiredate) FROM emp;
+
+

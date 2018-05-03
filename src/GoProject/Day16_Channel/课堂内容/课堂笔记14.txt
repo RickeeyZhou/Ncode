@@ -1,0 +1,223 @@
+上节课回顾：
+并发，并行，串行：
+并发：
+	
+并行：
+
+
+进程，线程，协程：--->多任务
+进程：Process
+	一个正在执行的程序
+
+线程：Thread
+	进程中的一条执行了路径。。
+
+协程：Coroutine
+	轻量级的线程。
+
+
+go语言的高并发：
+	A：支持真正的协程
+	B：语法的简洁
+
+goroutine--->go 高并发
+
+go关键字：
+	go 函数调用()
+
+
+	创建并启动了一个goroutine(go的协程)，执行指定的函数。。
+
+
+main()-->程序的入口
+	自动创建了main goroutine，执行main()...
+
+	可以在程序中通过go关键字，穿件并启动goroutine。。
+
+
+注意点：main goroutine如果执行完毕结束了，那么其他的子goroutine也随之结束了。。
+
+
+1.WaitGroup，同步等待组
+	同步：
+		main goroutine，waitgroup.wait()
+		导致main goroutine阻塞，直到waitgroup所有的子程序执行完毕。计数器：要执行的子goroutine。
+	WaitGroup-->Add(2)
+
+	go 函数1()
+		-->Done(),相当于Add(-1),
+	go 函数2()
+		-->Done()，
+
+	Wait()-->导致main goroutine，进入阻塞状态
+
+	
+
+2.临界资源竞争
+	Mutex.Lock(),上锁
+	Mutex.UnLock()，解锁
+
+本堂课内容：
+Channel，通道，
+	专门用于goroutine，传递消息的。
+
+
+ch1 <- 100
+
+
+	--->取数据
+	data, ok <- ch1
+		data，表示从通道取出的数据
+		ok，是否取出成功：bool：true，false
+	data <- ch1
+
+
+
+多线程-->并发
+	生产者消费者模型
+
+容器：篮子
+	8个鸡蛋
+
+母鸡：用于产生鸡蛋--->生产者
+
+吃货：消费鸡蛋--->消费者
+	
+
+协程--->并发
+
+
+
+
+
+
+
+
+
+总结和作业：
+1.通道的概念：
+	Channel，通道，专门用于goroutine之间传递消息
+
+	也是一种引用类型的数据：可以作为参数，也可以作为返回值
+
+	语法：
+		1.创建：make(chan T)
+		2.使用：
+			发送数据：写
+				chan <- data
+			接收数据：读
+				data := <- chan
+
+	通道的阻塞：
+		不带缓存：发送和接收都是阻塞的。
+			发送是阻塞的，直到有另一个goroutine读取数据解除阻塞。
+			类似的，接收也是阻塞的，直到另一个goroutine写出数据解除阻塞
+
+2.关闭通道：发送方关闭通道，用于通知接收方已经没有数据了。
+	close(chan),
+	v,ok <- chan
+		关闭通道后，其他的goroutine访问通道获取数据时候，得到是零值和false
+	A：死循环，可以有结束的条件。
+		for{
+			v ,ok := <- chan
+			if ok== false{
+				//通道已经关闭。。
+				break
+			}
+		}
+	B：for range chan
+		循环从通道中获取数据，直到通道关闭。
+		for v := range chan{
+			....v
+		}
+
+		
+3.缓存的通道
+	非缓存的通道，发送和接收都是阻塞
+	带缓存的通道，有一块缓存区可以继续发送和接收数据。
+	make(chan T, size)
+
+	缓存区中已经满了，才会阻塞程序
+
+	ch1:=make(chan int, 5)
+
+	ch1 <- 100//不阻塞，因为有缓存
+	ch1 <- 200//
+	ch1 <- 300
+	ch1 <- 400
+	ch1 <- 500
+	...//缓存区已满
+	
+	ch1 <- 600 // 阻塞程序了
+
+
+4.定向通道
+	默认的通道是双向的：make(chan T)
+		可读，可写
+		发送数据：chan <- data
+		读取数据：<- chan
+
+	定向的，也叫单向的通道
+		只读：只能接收
+			<- chan T
+		只写：只能发送
+			chan <- T
+
+
+	用于参数的传递
+
+
+	函数中：只有读的操作，可以传只读的通道
+
+
+5.生产者和消费者模型的概念
+	生产者：一个goroutine，向通道中发送数据
+	消费者：一个goroutine，从通道中接收数据
+
+	1-2,2-1,1-n,n-1..
+
+6.time包对于Channel的支持
+	time.After(d Duration)	<- chan Time
+
+		d时间后，向返回值chan中存储当前的时间。
+
+	timeout
+
+	time.Timer(d Duration)-->timer
+	timer.C  <- chan Time
+
+7.select语句，专门用于通道的使用
+	select {
+	case 通道的读写
+	}
+
+哪个case可以执行就执行哪个。
+如果有多个case可以执行，随机选择一个case执行。
+如果没有case可以执行，有defaute执行defaulte，如果没有defaute进入阻塞
+
+嵌套for使用。。
+
+
+
+
+
+	
+Socket：TCP，UDP
+
+MySQL数据库
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

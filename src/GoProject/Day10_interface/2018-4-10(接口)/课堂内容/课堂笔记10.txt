@@ -1,0 +1,426 @@
+上节课回顾：
+面向对象：是一种编程思维方式。
+	关注点：对象
+
+	1.对象
+	2.构建类-->结构体
+		属性，字段，filed
+
+	3.类和类之间的关系
+
+
+类和对象
+类：同一类事物的描述
+	字段，行为功能
+
+--->定义struct
+type 结构体名 struct{
+	//字段
+	字段名 字段类型
+}
+
+type Person struct{
+	name string
+	age int
+	sex string
+}
+
+对象：类中的一个具体的实例。
+对象的实例化：创建对象
+var p1 Person
+var i int
+var s string
+i = 100
+s = "hello"
+p1 = Person{} // Person类型
+p1.name --->""
+p1.age --->0
+p1.sex--->""
+
+p1.name = "。。。" //赋值
+p1.age = 20
+p1.sex = ""
+
+fmt.Println(p1.name) //取值
+
+
+
+p2 := Person{"王二狗",30,"男"}
+p3 := Person{
+	name:"王二狗",
+	age:30,
+	sex:"男",
+
+}
+p4 := new(Person) //new--->指针
+//*Person
+p4.name = ""
+
+
+
+
+对象访问字段，方法
+	对象.字段名：赋值，取值
+
+
+结构体的类型：值类型
+结构体的深浅拷贝：
+	默认是深拷贝
+	线拷贝：指针
+		new()-->
+		&
+
+
+匿名结构体和匿名字段
+Person{}
+
+
+p2:=struct{
+	name string
+	age int
+}{
+	name:"wangergou",
+	age:30
+}
+
+p2.name
+p2.age
+
+
+type Person struct{ // 匿名字段
+	string
+	int
+	
+}
+
+p1:=Person{"王二狗",30}
+p2:=Person{string:"wangergou",int:30}
+p1.string-->王二狗
+p1.int-->30
+
+封装，继承，多态
+封装：
+继承：一个子类，一个父类，存在继承关系
+	子类可以直接访问父类的属性和方法
+	子类可以新增自己的属性和方法
+	子类可以重写父类的方法
+
+
+继承的作用：子类 is a 父类
+
+
+多态：
+
+
+
+聚合关系：结构体的嵌套：一个类作为另一个类的字段
+	has - a
+
+
+
+
+
+结构体的嵌套：
+type Person struct{
+	name string
+	age int
+}
+
+type Student struct{
+	Person // 模拟继承
+	school string
+}
+
+s1:=Student{}
+s1.name = "王二狗"
+s1.age = 18 // 访问父类的属性，提升字段
+s1.school = "学校" // 访问自己的属性
+
+
+type Book struct{
+	bookName string
+	price float64
+}
+
+type Person struct{
+	name string
+	age int
+	book Book // 结构体的嵌套，模拟聚合关系
+
+}
+p1 := Person{}
+
+p1.name
+p1.age
+p1.book-->
+p1.book.bookName
+
+
+
+
+重载(overload)，重写(override)
+重载：同一个类中，方法名相同，参数列表不同。
+	
+重写：子类将父类已有的方法重新实现。
+
+
+
+
+继承：
+	子类，父类
+	子类 继承了父类
+		1.子类可以直接使用父类的属性和方法。
+		2.子类可以新增自己的属性和方法
+		3.子类可以重写父类已有的方法
+
+
+	作用和意义：
+		1.可以避免重复的代码。
+		2.扩展类的功能。(从父类角度)
+
+
+
+动物：
+	name，age
+	eat(),sleep()
+
+
+猫： 继承
+
+	猫是一个特殊的动物： is - a
+	c1:Cat
+	c1.name,c1.age,c1.eat(),c1.sleep()
+
+	可以新增属性，新增方法
+
+	可以重写父类已有的方法
+
+
+	c1--->子类重写的
+	
+x,y,z
+p1()
+
+func (s Student) getSum(){
+
+
+}
+
+func (s Student) getAvg(){
+	sum := s.getSum()//可以直接调用其他的方法
+
+}
+
+
+万年历：
+1900年1月1日星期一
+1900年2月
+
+2000年4月
+4月的天数：
+空格：year年month月
+	1900年到year年，month-1的月底的总天数
+	除以7取余数，就是空格数量。
+换行
+
+1900年2月
+	1900年1月1日--2月的上一个个月底的总天数
+
+2000年4月
+	1900年1月1日-2000年3月底的总天数
+
+星期一	星期二	星期三	星期四	星期五	星期六	星期日
+1	2	3	4	5	6	7
+8	9	10	11	12	13	14
+15	16	17	18	19	20	21
+22	23	24	25	26	27	28
+29	30	31	2月1	2	3	4
+5	6	7	8	9	10	11
+12	13	14	15	16	17	18
+
+
+
+
+
+
+
+		29	30	31	1	2
+3	4	5	6	7	8	9
+
+
+
+接口：
+interface：
+	"约定","契约"
+	约定行为--->声明行为
+		只有功能的描述，但是没有具体的实现。
+
+add()
+sub()
+
+
+需要具体的实现：
+	谁实现了接口中的所有的方法，那么该实现就理解为接口的实现类。
+
+
+
+增加：
+	Go语言，连接输入库，进行插入数据的操作。
+		insert into xxx 。xxxx
+		mysql：
+
+		oralce：
+	
+		。。。。。
+
+
+接口编程：
+	增加：add()
+	删除：delete()
+	修改：update()
+	查找：query()
+
+mysql--->
+
+oracle--->
+面向接口：
+	接口中的功能
+
+database-->mysql
+
+	db.add()
+	db.delete()
+	db.update()
+	db.query()
+
+
+
+
+step1：定义interface
+	方法的描述
+
+step2：提供结构体，让他做接口的实现类
+	让结构体，实现接口中的所有的方法
+	方法的实现即可。
+
+step3：使用接口对象的地方，都可以实现类对象。
+	USB：Mouse，FlashDisk。。。
+
+
+方法：规定对象的行为的。对象的行为功能。
+func (r recver) 方法名(参数列表) (返回值类型){....}
+
+函数：一段独立的功能，可以被直接调用
+
+func 函数名(参数列表)(返回值类型){....}
+
+函数名(实际参数)
+
+r.方法名(实际参数)
+
+面向对象：
+class Person{
+//字段
+	name string
+	age int
+
+//行为功能
+	func eat(){
+
+	}
+
+}
+go中
+type Person struct{
+//字段
+	name string
+	age int
+
+}
+
+func (p Person) eat(){
+
+}
+
+
+继承中：
+	子类和父类的关系。
+	子类对象可以直接访问父类的属性和方法
+	子类可以新增自己的属性和方法。
+	子类可以重写父类已有的方法。override
+
+
+Person{
+	name,age
+	eat(),sleep()
+}
+
+Student-->继承Person
+{
+	school,
+	study(),//新增
+	eat()//重写
+}
+
+s1.eat()//
+s1.study()
+s1.sleep()
+
+
+接口：interface
+	表示一个约定，契约，都是功能的描述(方法的声明)
+
+	语法：一个或多个方法的声明的集合。不能有实现，不能有字段。
+
+实现类：可以是任意类型
+	只需要将接口中方法都实现，那么就是实现该接口。
+
+type A interface{
+	fun() 返回值
+}
+
+type AImpl struct{
+	字段
+}
+
+
+func (a Ampl) fun()返回值{
+
+}
+
+多态：定义一个接口类型，但是可以创建任意的实现类的对象。
+
+
+应用：
+	接口作为参数：那么实参可以是该接口的任意实现类对象。
+
+空接口：
+	一个接口中没有任何的方法。
+	任意的对象都可以是该接口的实现类。
+
+
+空接口类型的数组：
+	那么该数组中就可以存储任意类型的数据。
+
+空接口作为参数：可以传入任意类型的数据。
+	
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

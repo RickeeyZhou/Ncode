@@ -1,0 +1,414 @@
+上节课回顾：
+方法，接口
+方法和函数：
+func (c Receiver)函数名/方法名(形参列表)(返回值列表){
+	//.....
+}
+
+接口：interface
+	一个方法或多个方法的集合。
+
+
+	方法功能的描述：方法的声明，没有方法的实现。
+
+实现类，需要实现接口中的所有的方法。
+
+接口和实现类：
+	接口类型的对象，可以创建任意的实现类对象。
+
+	var p1 接口类型
+	p1 = 实现类的对象// 不能访问实现类中的字段
+
+
+	var p2 实现类类型
+	p2 = 实现类 的对象//访问实现类中字段，以及方法。
+
+使用到接口的对象，都可以使用任意的实现类对象来表示。
+	
+	
+
+
+本堂课内容：
+
+
+异常：不正常，程序中存在不正常的事件，导致程序无法正常的执行。。
+100
+	20行，除零
+
+其他语言中：try，catch，finally
+	try{
+		
+	}catch(异常类型){
+
+	}finally{
+			
+	}
+
+
+error,错误，来表示程序中的不正常。
+	函数() 返回值：error
+
+error：nil，表示没有错误
+	
+
+数据类型：
+基本类型：
+	布尔，数值(int，float，complex)，字符串
+复合类型：
+	数组，切片，map，struct，pointer，interface。。。error
+
+	
+
+函数：一段功能代码
+
+
+func 函数名(参数列表)(返回值列表){
+	//....
+}
+
+函数名(实参)
+
+// 求商，判断除数是否为0。
+func div(a, b int)(int ,int, error){
+	//条件判断，如果某个条件满足，不正常，return err
+	if b == 0{
+		return error的对象,就是返回error接口的实现类的对象。
+	/*
+		errors.New()-->error
+		fmt.Errorf()-->error
+	*/
+	}
+	//程序可以正常执行的，error-->nil
+	res1 := a / b
+	res2 := a % b
+	return res1, res2, nil
+}
+
+
+res1, res2, err := div(10, 5)
+err == nil-->div()没有问题
+err !=nil -->div()有问题
+
+//
+
+
+error-->interface
+	返回interface的实现类的对象
+
+
+自己定义struct实现
+go中也提供了现成的实现：
+	stringError  struct
+
+封装方法：
+	errors.New("text")
+
+
+
+fmt包
+	fmt.Println()-->打印内容，并换行
+	fmt.Print()-->打印内容，不换行
+	fmt.Printf(format:"xxxxxx占位符：%d,%f,%s,%c,%v,%T,%p,%q...")-->打印格式化后内容
+
+	fmt.Errorf(format:"xxxxxx占位符：%d,%f,%s,%c,%v,%T,%p,%q...")-->将格式化后的内容，以error返回
+
+	fmt.Sprintf(format:"xxxxxx占位符：%d,%f,%s,%c,%v,%T,%p,%q...")-->将格式化后的内容，以string返回
+
+
+
+error错误对象：
+	Error() string
+
+
+
+
+	go提供好的：
+		errors.New()
+		fmt.Errorf()
+
+	自定义实现类：RectError-->struct
+		step1：定义结构体，用于实现error接口
+			type RectError struct{
+				//字段
+			}
+
+		step2：结构体实现error的方法。
+			func (r *RectError) Error() string{
+
+		}
+
+		step3：使用-->
+			创建error对象，创建自定义实现类的对象即可。
+
+
+defer，延迟，推迟
+	延迟函数或方法的执行。
+整型：
+有符号，
+	int8,
+	int16,
+	int32
+	int64
+	int
+无符号，
+	uint8,
+	unit16,
+	uint32
+	uint64
+
+	uint
+
+byte,
+	uint8
+rune,
+	int32
+
+
+
+程序：error处理
+	go--->函数/方法，给提供返回值：error
+	调用处根据函数的执行结果，获取error对象
+		error是不是nil。
+		nil，调用的函数正常执行
+		否则，不正常
+
+
+
+func div(a, b int) (int, error){ //2个：
+	//判断b的值
+	if b == 0{
+		//无法除法，返回错误对象
+		return 0, error
+	}
+		
+
+	return a / b, nil
+
+}
+
+os包：
+
+
+error：表示错误
+	语法：interface
+type error interface {
+        Error() string //获取错误信息
+}
+
+
+
+
+
+调用别人的函数：
+	函数中有返回error，
+		error-->nil,代码继续执行
+		error-->不为nil
+			fmt.Println(err)//得到Error()string。
+
+自己定义函数：
+	函数中有返回error，
+		A：errors.New()-->error
+	ErrorString struct{}
+
+fmt.Errorf("")-->error
+	ErrorString
+
+		B：自己定义实现类，实现error接口
+
+
+
+
+res, err := div(a, b)
+if err != nil{
+	//....	
+}
+
+
+
+ file, err := os.Open("/test.txt")
+ if err != nil {
+        fmt.Println(err)
+        return
+ }
+
+
+file.read(bs) //读取test.txt中的数据
+
+
+
+
+键盘上输入两个数字，求商
+
+
+除零：打断程序
+
+
+n：是否是素数
+	2-(n-1)
+
+1*100 = 100
+2*50=100
+3*33=100
+4*25=100
+5*20=100
+6*16.7=100
+7*13.=100
+8*12.5=100
+9*11.1=100
+10*10=100
+11*9=100
+
+
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+总结和作业：
+1.error
+	表示程序中的错误。
+	用法：用于函数多返回值。
+
+func 函数名(参数列表)(返回值，error){
+
+}
+
+xx,err:=函数名()
+if err == nil,函数执行无误，结果有效，可以继续向下执行
+else err != nil,有错误产生了，函数执行过程中有问题。
+	
+error的类型：interface，系统的内置接口类型
+type error interface{
+	Error() string //错误的信息
+}
+
+	A：系统中提供好的error对象
+		errors.New() -->error
+		fmt.Errorf("")-->error
+
+	B：自定义类型
+		type RectError struct{
+			//field
+		}
+
+		//实现接口
+		func (r *RectError) Error() string{
+			
+		}
+		
+		
+
+
+
+s1:=Person{}
+s1.field
+
+
+s2:=Person{field:value}
+
+s3:=Person{
+	field:value,
+	field:value,
+}
+
+s4:=New(Person) //内置函数，用于创建对象的指针
+	指针
+
+2.defer
+	延迟执行，函数，方法
+	如果有多个延迟，按照后进先出的规则：
+		先延迟的后执行，后延迟的先执行
+
+	如果defer函数有参数，延迟的时候已经传递了。
+
+3.panic和recover(了解)
+	panic()，恐慌，直接打断程序的正常执行。。。
+	
+	recover(),恢复，
+		必须在defer的函数中使用recover
+
+
+4.strconv：字符串和基本类型之间的转换
+	int，uint，float，bool
+	string-->基本类型
+		ParseXXX()
+
+	基本类型-->string
+		FormatXXX()
+
+	Atoi(string)-->int
+	Itoa(int)-->string
+
+5.math：和数学相关的函数
+	ceil()
+	floor()
+	abs()
+	mod()
+	modf()
+	pow(x,y)
+	pow10(n)
+	sqrt()
+	cbrt()
+	//....
+	
+6.time：日期和时间
+	Now()-->Time,获取当前的日期
+	Date()-->Time,获取指定的日期
+
+	time-->string,string-->time
+	t1.Format("2006 1 2 15:04:05") // 6 1 2 3 4 5
+
+
+	time.Parse("模板", str)-->Time
+
+
+	时间戳：timeStamp
+		该日期，距离1970年1月1日，0点0时0分0秒。。的时间差值
+
+	秒：Unix()-->int64
+	纳秒：UnixNano()-->int64
+
+
+
+rand.Seed(int64)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,258 @@
+上节课回顾：
+函数：
+	概念：一段具有特殊功能的代码。
+	意义：避免重复的代码。增强程序的扩展性。
+
+	使用：
+		step1：定义，声明
+		step2：调用
+
+	语法：
+func-->function
+getSum-->函数名：标识符
+()-->函数的标志
+参数：
+	形式参数-->形参
+		形参名 形参类型,形参名 形参类型
+
+	实际参数-->实参
+		在函数调用时，传递给形参的实际的数据。
+
+返回值列表：
+	(返回值名 返回值类型，返回值名 返回值类型)
+		return
+	(返回值类型， 返回值类型)
+		return 返回值名，返回值名
+
+	返回值类型
+
+
+return：
+	用于将结果返回给调用处，并结束函数的执行
+
+
+
+参数的传递：
+	1.值传递
+		bool，int，float64，string，数组
+	2.引用传递
+		切片，map
+		
+
+递归函数：
+	一个函数自己调用自己，递归调用。
+	
+
+
+func test2(n int)int{
+	if n == 0 || n == 1{
+		return 1
+	}
+
+	return test2(n - 1)
+}
+
+test2(5)
+
+
+
+func getSum([形参列表])(返回值){
+
+
+}
+
+
+func test1()( int,  int){
+	a := 1
+	b := 100
+	//return a, b 
+	return 0, 1
+}
+
+
+num1, num2 := test1()
+
+
+func main(){
+	getSum
+}
+
+本堂课内容：
+函数：
+	数据类型：
+基本类型：
+	bool，数值(整数，浮点，复数),string
+复合类型：
+	数组，切片，map，函数。。
+
+函数的本质：
+
+
+var num1 int = 100
+
+var s1 string ="abc"
+
+var arr1 = [4]int{1,2,3,4}
+
+var slice1 = []int{1,2,3,4}
+var slice2 = make([]int,len,cap)
+
+
+
+func test1(fun func(int,int) int,m int, n int){}
+
+
+
+
+
+
+
+指针：
+
+
+package main
+
+import ""
+
+func test2(){
+
+}
+
+func main(){ // 程序的入口
+
+
+}
+
+func test1(){
+
+	func(){
+
+	}()
+
+	fun:=func(){
+
+	}
+	fun()
+
+}
+
+总结和作业：
+1.函数
+函数的类型：复合类型
+	函数的类型：由形参列表和返回值列表决定
+		func (形参列表)(返回值)
+
+		func (int,int)string
+		func() (int,int,int)
+		func(float64,float64)
+
+作为一种特殊的变量
+func fun1() int{
+
+}
+a := fun1 //将fun1的地址赋值给a，a也指向了该函数体。a也是一个函数类型
+b := fun1()//将fun1函数进行调用，将执行结果赋值b
+c := a()//  将a指向的fun1的函数进行调用，并将结果给c
+
+
+匿名函数：
+	没有名字的函数
+	func (){
+
+	}()
+
+	赋值给某个变量
+	a := func (){
+
+	}
+	a()
+
+
+函数作为参数：
+func test1(a int, fun func(int) int){
+	
+}
+
+//test1：
+	参数1：a int
+	参数2：fun func(int) int
+
+func fun2(m int) int{}
+
+
+函数作为返回值：
+
+func 函数名(形参列表)函数类型{
+	x := 0
+	a := fun(){
+
+	}
+	return a
+}
+
+
+test1(1, fun2)
+
+2.指针
+指针变量：存储了某个变量的地址
+	变量:=数值//开辟内存，变量名，变量值，变量类型
+
+定义指针：
+	var p1 *T
+
+
+&,取地址
+*,取指针中地址对应的数据
+
+a := 100 // 0x1314
+p1 *int
+
+p1 = &a // 0x1314
+fmt.Printf("%p,%p", &p1,p1)
+fmt.Println(a, *p1)
+
+p2 **int
+
+p2 = &p1
+fmt.Println(**p2)
+
+深拷贝和浅拷贝：
+深拷贝：
+	复制的数据
+
+浅拷贝：
+	复制的地址
+
+
+值类型：
+int
+arr
+string
+float
+
+引用类型：
+slice
+map
+func
+
+
+函数的参数是指针：
+	值类型的数据，传递指针：
+		函数中操作指针，就是操作原始的数据
+普通参数：
+	值传递：值类型，
+	引用传递：引用类型
+
+
+
+结构体：
+	
+
+
+
+
+
+
+
+
+

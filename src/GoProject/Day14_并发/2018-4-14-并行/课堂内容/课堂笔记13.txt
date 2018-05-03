@@ -1,0 +1,195 @@
+上节课回顾：
+文件和文件读写
+1.文件，目录
+	File，Directory
+	文件：直接存储数据的，数据的持久化保存。
+		音频，视频，图片，文本
+
+		文件的后缀：		.exe,.txt,.mp3,.mp4,.rar,.zip,.go,.java.class,py,
+
+
+
+	目录：文件所在的目录位置
+		理解为文件夹
+
+
+
+2.go操作文件和目录
+	文件：FileInfo
+
+
+filepath包
+	文件路径：
+		绝对路径，相对路径
+	Abs()
+	IsAbs()
+
+
+	
+os包
+	os.Mkdir(),
+	os.MkDirAll(),
+	os.Remove(),文件，文件夹
+	os.RemoveAll(),
+
+
+
+	
+	os.Stat(filename)-->fileInfo,err
+		Name(),isDir(),Size(),Mode(),Modtime()...
+
+	os.Open(filenam)-->*File,err
+	os.OpenFile(filename,flag,FileMode)-->*File,err
+	os.Create(filename)-->*File,err
+
+
+	文件的读写
+	file.Read([] byte)-->count,err
+	file.ReadAt([] byte,off)
+	file.Write([] byte)
+	file.WriteAt([] byte, off)
+	file.WriteString(string)
+
+	file.Seek(offset,whence:012)
+	file.Close(),关闭文件，断开资源的链接
+
+
+
+io包：
+	io.Copy()-->total,err
+
+
+
+ioutil工具包：
+	
+	ioutil.ReadFile(filename)-->data byte[] 
+	ioutil.WriteFile(filename,data byte[], FileMode)-->
+
+	ioutil.ReadAll(Reader)
+	ioutil.ReadDir(dirname)-->[] FileInfo
+
+
+bufio包：
+
+	
+本堂课内容：2-2.5天。
+
+go，并发
+
+Concurrency并发性
+
+parallelism并行性
+
+
+单核：
+
+
+进程：Process
+	正在执行的程序。。
+
+
+线程：Thread
+	进程中的一条执行路径。。
+
+协程：Coroutine
+	轻量级的线程。
+
+
+Go的Goroutine，是协程的一种实现。
+
+
+
+World文档-->进程
+	自动检查首字母大写
+	拼写错误检查
+	。。。
+
+
+进程结束，线程也结束了。
+
+
+
+go 启动一条协程goroutine，执行指定的函数
+
+同步等待组：WaitGroup
+	同步-->串行
+		one by one
+
+
+
+
+
+总结和作业：
+1.并发性、并行性
+	
+Concurrency并发性
+	同时可以执行多条路径，但是同一时间点上，只能执行1个。
+
+	
+parallelism并行性
+
+	多条路径同时执行，真正的并行多核支持。
+
+
+2.进程，线程，协程-->多任务
+进程process：正在执行的程序。
+
+线程thread：进程中的一条执行路径。。
+
+协程coroutine：轻量级的线程。 高并发
+
+3.go语言中的goroutine，就是go的协程的实现。
+
+4.启动goroutine，
+	go关键字，创建并启动协程，一条执行路径
+
+		go 函数调用
+
+	启动了goroutien，执行指定的函数，函数执行结束，意味着该goroutine结束了。如果函数有返回值，那么也会被舍弃的。
+
+
+5.main goroutine，当程序执行的时候，自动创建并启动了main goroutine，执行main(),如果程序中有多条goroutine，并发执行，如果main goroutine结束，那么其他的子goroutine。
+
+	A：time.Sleep()
+	B：同步等待组：sync包的WaitGroup
+		要执行的子goroutine，需要通过Add(2)
+
+		main中wait(),表示main goroutine进入等待状态，相当于阻塞，暂时不执行。直到WaitGroup中的子goroutine执行完毕，解除阻塞。
+	每当子goroutine，调用Done(),表示减。
+
+	C：通道：Channel，王道
+		
+6.资源竞争：
+	多个goroutine操作同一个共享数据，存在不安全。
+
+	上锁：互斥锁(开，关)
+
+	sync.Mutex
+		Lock(),UnLock()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
