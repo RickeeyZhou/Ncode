@@ -35,7 +35,7 @@
       <file leaf-file-name="cityListParser.go" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/zhenai/parser/cityListParser.go">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="261">
+            <state relative-caret-position="458">
               <caret line="21" column="36" lean-forward="true" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
               <folding>
                 <element signature="e#16#67#0" expanded="true" />
@@ -119,7 +119,7 @@
   <component name="NodePackageJsonFileManager">
     <packageJsonPaths />
   </component>
-  <component name="ProjectFrameBounds" extendedState="5">
+  <component name="ProjectFrameBounds" extendedState="4">
     <option name="y" value="36" />
     <option name="width" value="960" />
     <option name="height" value="1044" />
@@ -208,7 +208,7 @@
     </recent_temporary>
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="36" width="960" height="1044" extended-state="5" />
+    <frame x="0" y="36" width="960" height="1044" extended-state="4" />
     <editor active="true" />
     <layout>
       <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24375" />
@@ -217,7 +217,7 @@
       <window_info anchor="right" x="0" y="0" width="430" height="844" id="Documentation" side_tool="true" visible="true" weight="0.0" />
       <window_info anchor="right" id="Database" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.20957446" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.20957446" />
       <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" />
@@ -307,7 +307,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/zhenai/parser/cityListParser.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="261">
+        <state relative-caret-position="458">
           <caret line="21" column="36" lean-forward="true" selection-start-line="21" selection-start-column="36" selection-end-line="21" selection-end-column="36" />
           <folding>
             <element signature="e#16#67#0" expanded="true" />
